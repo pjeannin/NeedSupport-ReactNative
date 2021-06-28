@@ -6,7 +6,10 @@ class AddWorkshop extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            date: Date.now()
+            date: Date.now(),
+            duration: new Date(0),
+            title: "",
+            description: ""
         }
     }
 
@@ -17,7 +20,20 @@ class AddWorkshop extends React.Component {
     _onChange(event, selectedDate){
         const currentDate = selectedDate || this.state.date;
         this._setDate(currentDate);
+    }
+
+    _setDuration(date) {
+        this.setState({duration: date})
+    }
+
+    _onChangeDuration(event, selectedDate){
+        const currentDate = selectedDate || this.state.duration;
+        this._setDuration(currentDate);
     };
+
+    _addWorkshop() {
+        console.log("new Workshop")
+    }
 
     render() {
         return(
@@ -49,43 +65,56 @@ class AddWorkshop extends React.Component {
                         returnKeyType="next"
                     />
                 </View>
-                <Text style={styles.title}>Date</Text>
-                <View style={{textAlign: 'center'}}>
-                    <DateTimePicker
-                        testID="dateTimePicker"
-                        value={this.state.date}
-                        themeVariant="dark"
-                        mode={'date'}
-                        is24Hour={true}
-                        display="default"
-                        onChange={(event, selectedDate) => {this._onChange(event, selectedDate)}}
+                <View style={{flexDirection: 'row', margin: 10}}>
+                    <View style={{flex: 1}}/>
+                    <Text style={styles.titleDate}>Le</Text>
+                    <View style={styles.dateTimePicker}>
+                        <DateTimePicker
+                            testID="dateTimePicker"
+                            value={this.state.date}
+                            themeVariant="dark"
+                            mode={'date'}
+                            is24Hour={true}
+                            display="default"
+                            onChange={(event, selectedDate) => {this._onChange(event, selectedDate)}}
+                        />
+                    </View>
+                    <Text style={styles.titleDate}>À</Text>
+                    <View style={styles.timePicker}>
+                        <DateTimePicker
+                            testID="dateTimePicker"
+                            value={this.state.date}
+                            themeVariant="dark"
+                            mode={'time'}
+                            is24Hour={true}
+                            display="default"
+                            onChange={(event, selectedDate) => {this._onChange(event, selectedDate)}}
+                        />
+                    </View>
+                    <View style={{flex: 1}}/>
+                </View>
+                <View style={{flexDirection: 'row', margin: 10}}>
+                    <View style={{flex: 1}}/>
+                    <Text style={styles.titleDate}>Durée</Text>
+                    <View style={styles.timePicker}>
+                        <DateTimePicker
+                            testID="dateTimePicker"
+                            value={this.state.duration}
+                            themeVariant="dark"
+                            mode={'time'}
+                            is24Hour={true}
+                            display="default"
+                            onChange={(event, selectedDate) => {this._onChangeDuration(event, selectedDate)}}
+                        />
+                    </View>
+                    <View style={{flex: 1}}/>
+                </View>
+                <View style={styles.addButton}>
+                    <Button
+                        title="ajouter"
+                        onPress={() => this._addWorkshop()}
                     />
                 </View>
-                <Text style={styles.title}>Heure</Text>
-                <View style={{textAlign: 'center'}}>
-                    <DateTimePicker
-                        testID="dateTimePicker"
-                        value={this.state.date}
-                        themeVariant="dark"
-                        mode={'time'}
-                        is24Hour={true}
-                        display="default"
-                        onChange={(event, selectedDate) => {this._onChange(event, selectedDate)}}
-                    />
-                </View>
-                <Text style={styles.title}>Durée</Text>
-                <View style={{textAlign: 'center'}}>
-                    <DateTimePicker
-                        testID="dateTimePicker"
-                        value={this.state.date}
-                        themeVariant="dark"
-                        mode={'time'}
-                        is24Hour={true}
-                        display="default"
-                        onChange={(event, selectedDate) => {this._onChange(event, selectedDate)}}
-                    />
-                </View>
-                <Button title="ajouter"/>
             </View>
         )
     }
@@ -106,6 +135,13 @@ const styles = StyleSheet.create({
         marginTop: 5
     },
 
+    titleDate: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        margin: 12
+    },
+
     textFieldView: {
         backgroundColor: 'white',
         borderRadius: 20,
@@ -120,6 +156,24 @@ const styles = StyleSheet.create({
     },
 
     dateTimePicker: {
-        textAlign: 'center'
+        backgroundColor: 'white',
+        textAlign: 'center',
+        margin: 5,
+        borderRadius: 20,
+        width: 100
+    },
+
+    timePicker: {
+        backgroundColor: 'white',
+        textAlign: 'center',
+        margin: 5,
+        borderRadius: 20,
+        width: 70
+    },
+
+    addButton: {
+        backgroundColor: 'white',
+        borderRadius: 20,
+        margin: 5
     }
 })
